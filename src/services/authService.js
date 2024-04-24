@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.model")
 const bcrypt = require("bcrypt")
+const JWT = require("../utils/jwt")
 
 class AuthService {
 
@@ -19,15 +20,14 @@ class AuthService {
     static login = async (req) => {
         const { user } = req.body;
 
-        let document = await UserModel.findOne({email: user.email})
-
+        let document = await UserModel.findOne({email: user.email});
         if (document === null) throw new Error("Username or password incorrect.");
 
         const passwordMatch = await bcrypt.compare(user.password, document.password);
+        if (!passwordMatch) throw new Error("Username or password incorrect.");
 
-        if (!passwordMatch) throw new Error("Username or password incorrect.")
-
-        return document;
+        const token = JWT.generate(document.username)
+        return token;
     }
 
 }
