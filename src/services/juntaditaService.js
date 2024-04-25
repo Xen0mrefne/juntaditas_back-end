@@ -6,13 +6,13 @@ class JuntaditaService {
     static async getJuntaditasByUser(req) {
         const { user } = req.params;
 
-        return await JuntaditaModel.find({miembros: {$elemMatch: {_id: user} }})
+        return await JuntaditaModel.find({members: {$elemMatch: {_id: user} }})
     }
 
     static async addJuntadita(req) {
         const { user } = req.body;
 
-        const document = new JuntaditaModel({miembros: [{user: user._id, role: "owner"}]})
+        const document = new JuntaditaModel({members: [{user: user._id, role: "owner"}]})
 
         await document.save();
     }
