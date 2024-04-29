@@ -9,7 +9,7 @@ const schema = new Schema({
     members: {
         type: [{
             user: Schema.ObjectId,
-            role: Schema.ObjectId
+            role: String
         }],
         required: true,
         default: []

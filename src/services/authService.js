@@ -26,8 +26,8 @@ class AuthService {
         const passwordMatch = await bcrypt.compare(user.password, document.password);
         if (!passwordMatch) throw new Error("Username or password incorrect.");
 
-        const token = JWT.generate({username: document.username})
-        return {username: document.username, token};
+        const token = JWT.generate({user: document._id})
+        return {userId: document._id, username: document.username, token};
     }
 
 }
